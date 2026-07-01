@@ -7,6 +7,45 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+    <main class="terminal">
+        <header class="terminal__header">
+            <p class="terminal__label">Viajante Tech // sistema 1987</p>
+            <h1>Planos de viagens</h1>
+            </header>
+
+        <section class="terminal__panel">
+            <div class="terminal__row">
+                <span>01</span>
+                <strong>Origem</strong>
+                 <label for="origem" placeholder="Digite a cidade de origem:"></label>
+                 <input type="text" id="origem">
+            </div>
+            <div class="terminal__row">
+                <span>02</span>
+                <strong>Destino</strong>
+                <label for="destino" placeholder="Digite a cidade de destino:"></label>
+                <input type="text" id="destino">
+            </div>
+            <div class="terminal__row">
+                <span>03</span>
+                <strong>Data Partida</strong>
+                <label for="data-partida" placeholder="DD/MM/AA"></label>
+                <input type="date" id="data-partida">
+            </div>
+            <div class="terminal__row">
+                <span>03</span>
+                <strong>Data Retorno</strong>
+                <label for="data-retorno" placeholder="DD/MM/AA"></label>
+                <input type="date" id="data-retorno">
+            </div>
+        </section>
+                    
+            <button onclick="Geraresumo()">Gera Resumo</button>
+        
+      
+        
+    </main>
+
     <script src="./app/main.js"></script>
 </body>
 </html>
