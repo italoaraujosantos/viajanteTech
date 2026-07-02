@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Estilo Anos 80 - Verde e Preto</title>
-<style>
+
     body {
         background-color: #000;
         color: #00ff00;
@@ -34,23 +28,6 @@
         margin: auto;
         background-color: rgba(0, 0, 0, 0.9);
     }
-</style>
-</head>
-<body>
 
-<div class="terminal">
-    <h1 class="glow">> SISTEMA RETRÔ 1984</h1>
-    <p>Carregando<span id="dots" class="blinking">...</span></p>
-</div>
 
-<script>
-    const dots = document.getElementById('dots');
-    let count = 0;
-    setInterval(() => {
-        count = (count + 1) % 4; // 0,1,2,3
-        dots.textContent = '.'.repeat(count);
-    }, 500);
-</script>
 
-</body>
-</html>
