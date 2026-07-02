@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estilo Anos 80 - Verde e Preto</title>
+<style>
+    body {
+        background-color: #000;
+        color: #00ff00;
+        font-family: 'Courier New', Courier, monospace;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .glow {
+        text-shadow: 0 0 5px #00ff00,
+                     0 0 10px #00ff00,
+                     0 0 20px #00ff00;
+    }
+
+    .blinking {
+        animation: blink 1s step-start infinite;
+    }
+
+    @keyframes blink {
+        50% { opacity: 0; }
+    }
+
+    .terminal {
+        border: 2px solid #00ff00;
+        padding: 15px;
+        max-width: 600px;
+        margin: auto;
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+</style>
+</head>
+<body>
+
+<div class="terminal">
+    <h1 class="glow">> SISTEMA RETRÔ 1984</h1>
+    <p>Carregando<span id="dots" class="blinking">...</span></p>
+</div>
+
+<script>
+    // Efeito de pontos piscando no "Carregando"
+    const dots = document.getElementById('dots');
+    let count = 0;
+    setInterval(() => {
+        count = (count + 1) % 4; // 0,1,2,3
+        dots.textContent = '.'.repeat(count);
+    }, 500);
+</script>
+
+</body>
+</html>
