@@ -154,18 +154,27 @@ function printHistory(datasList) {
  * Função de iniciar 
  */
 function initial() {
-    document.getElementById("btn-iniciar").addEventListener("click", function() {
-    // Cria o objeto de áudio
-    var audio = new Audio("../midia/win31.mp3"); 
-    audio.play();
+    const btnIniciar = document.getElementById("btn-iniciar");
 
-    // Aguarda o áudio começar e depois redireciona
-    audio.onended = function() {
-      window.location.href = "../pages/page2.html";
-    };
-  });
-   //  Executa a função principal
-   main();
+    if (btnIniciar) {
+        btnIniciar.addEventListener("click", () => {
+            const audio = new Audio("../midia/win31.mp3");
+
+            audio.play()
+                .catch((erro) => {
+                    console.error("Erro ao reproduzir o áudio:", erro);
+                    // Redireciona mesmo se o áudio falhar
+                    window.location.href = "../pages/page2.html";
+                });
+
+            audio.addEventListener("ended", () => {
+                window.location.href = "../pages/page2.html";
+            });
+        });
+    }
+
+    // Executa a função principal
+    main();
 }
 
 /** * Função principal que obtém os dados de viagem e clima, e salva no histórico
