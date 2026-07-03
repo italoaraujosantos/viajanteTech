@@ -156,12 +156,12 @@ function printHistory(datasList) {
 function initial() {
     document.getElementById("btn-iniciar").addEventListener("click", function() {
     // Cria o objeto de áudio
-    var audio = new Audio("./src/midia/win31.mp3"); 
+    var audio = new Audio("../midia/win31.mp3"); 
     audio.play();
 
     // Aguarda o áudio começar e depois redireciona
     audio.onended = function() {
-      window.location.href = "./src/pages/page2.html";
+      window.location.href = "../pages/page2.html";
     };
   });
    //  Executa a função principal
