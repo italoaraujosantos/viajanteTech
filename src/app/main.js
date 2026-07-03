@@ -77,11 +77,11 @@ async function getForecast(location, days) {
         alerts: 'yes',
     });
 
-    const response = await fetch('${BASE_URL}/forecast.json?${params}');
+    const response = await fetch(`${BASE_URL}/forecast.json?${params}`);
 
     if(!response.ok) {
         const error = await response.json();
-        throw new  Error('WeatherAPI codigo de error ${error.code}: ${error.error.message}');
+        throw new  Error(`WeatherAPI codigo de error ${error.code}: ${error.error.message}`);
     }
 
     return response.json();
@@ -168,14 +168,14 @@ function initial() {
                 });
 
             audio.addEventListener("ended", () => {
-                window.location.href = "../pages/page2.html";
+                window.location.href = "page2.html";
             });
         });
     }
-
+}
     // Executa a função principal
     main();
-}
+
 
 /** * Função principal que obtém os dados de viagem e clima, e salva no histórico
  * @returns {Promise<void>}
