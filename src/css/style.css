@@ -1,33 +1,89 @@
+:root {
+    color-scheme: dark;
+    --accent: #00ff66;
+    --bg: #000000;
+    --panel: #050505;
+}
 
-    body {
-        background-color: #000;
-        color: #00ff00;
-        font-family: 'Courier New', Courier, monospace;
-        margin: 0;
-        padding: 20px;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    .glow {
-        text-shadow: 0 0 5px #00ff00,
-                     0 0 10px #00ff00,
-                     0 0 20px #00ff00;
-    }
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--accent);
+    font-family: Arial, sans-serif;
+    padding: 2rem;
+}
 
-    .blinking {
-        animation: blink 1s step-start infinite;
-    }
+.container {
+    width: min(700px, 100%);
+    padding: 2rem;
+    border: 1px solid var(--accent);
+    background: var(--panel);
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+    text-align: center;
+}
 
-    @keyframes blink {
-        50% { opacity: 0; }
-    }
+h1 {
+    margin: 0 0 1.5rem;
+    color: var(--accent);
+    text-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
+    font-size: 2.5rem; 
+}
 
-    .terminal {
-        border: 2px solid #00ff00;
-        padding: 15px;
-        max-width: 600px;
-        margin: auto;
-        background-color: rgba(0, 0, 0, 0.9);
-    }
+section {
+    margin-bottom: 1.5rem;
+}
 
+label {
+    display: block;
+    margin-bottom: 0.3rem;
+    text-align: left;
+}
 
+input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.3rem;
+    border: 1px solid var(--accent);
+    background: #000;
+    color: var(--accent);
+    border-radius: 4px; 
+    font-size: 1rem;
+}
 
+input:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 255, 102, 0.5);
+}
+
+button {
+    background: #000;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.8rem 2rem;
+    font-size: 1.2rem; 
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+}
+
+button:hover {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.7);
+}
+
+hr {
+    border-color: rgba(0, 255, 102, 0.3);
+    margin: 1.5rem 0;
+}

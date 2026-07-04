@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta author="Emerson Moron Rosa, Italo Araujo Santos, Daniel de Lima Pereira">
+    <title>Planejador de viagem</title>
+    <link rel="stylesheet" href="../css/style.css">
+    </head>
+<body class="home-page">
+    <main>
+        <h1>Planejador de viagem</h1>
+        <section id="cidades">
+            <h3>Dados da viagem</h3>
+            <label for="origem">Digite a cidade de origem:</label>
+            <input type="text" id="origem">
+            <br><br>
+            <label for="destino">Digite a cidade de destino:</label>
+            <input type="text" maxlength="50" id="destino">
+            <br>
+        </section>
+        <hr>
+        <section id="datas">
+            <h3>Período</h3>
+            <label for="data-inicio">Digite a data de início:</label>
+            <input type="date" id="data-inicio">
+            <br><br>
+            <label for="data-fim">Digite a data de fim:</label>
+            <input type="date" id="data-fim">
+            <br><br>
+             
+             <button id="btn-resumo">Gerar resumo</button>
+             <button id="btn-voltar" onclick="window.location.href='index.html'">Voltar</button>
+
+             <script src="main.js"></script>
+        </section>
+
+       
+        <hr>
+       
+        
+         <script src="../app/main.js"></script>
+
+           
+        </main>
+    
+</body>
+</html>

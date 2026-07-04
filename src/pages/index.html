@@ -4,68 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta author="Emerson Moron Rosa, Italo Araujo Santos, Daniel de Lima Pereira">
-    <title>Planejador de viagem</title>
-    <link rel="stylesheet" href="css/style.css">
-    </head>
-<body>
-    <main>
-        <h1>Planejador de viagem</h1>
-        <section id="cidades">
-        <h2>Dados da viagem</h2>
-        <label for="origem">Digite a cidade de origem:</label>
-        <input type="text" id="origem">
-        <br><br>
-        <label for="destino">Digite a cidade de destino:</label>
-        <input type="text" id="destino">
-        <br>
-        </section>
-        <section id="datas">
-            <h3>Período</h3>
-            <label for="data-inicio">Digite a data de início:</label>
-            <input type="date" id="data-inicio">
-            <br>
-            <label for="data-fim">Digite a data de fim:</label>
-            <input type="date" id="data-fim">
-            <br>
-        </section>
-        <button onclick="clima()">Busca previsão do tempo</button>
-        <button onclick="gera_resumoo()">Gerar resumo</button>
+    <title>Tela de Abertura</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="home-page">
+    <div class="container">
+        <h1>Bem-vindo ao TRIP PLANNER</h1>
+        <button onclick="initial()" id="btn-iniciar" target="_blank">Iniciar</button>
+    </div>
 
-        <section id="resumo">
-            <h3>Resumo da viagem</h3>
-            <p>Sua viagem saindo de <span id="cidade-origem"></span> e indo para <span id="cidade-destino"></span></p> com partida em
-            <span id="data-inicio-resumo"></span> e retorno em <span id="data-fim-resumo"></span>.
-            Tem previsão de <span id="previsao"></span> durante a viagem.
-            <p>Deseja prosseguir com a reserva?</p>
-            <button type="button" onclick="reserva()"Sim</button>
-            <button type="button" onclick="naoReserva()">Não</button>
-        
-        <!--//*
-                
-        <section id="imposto">
-            <h3>Imposto</h3>
-            <label for="valor-compra">Digite o valor da compra:</label>
-            <input type="number" id="valor-compra">
-            <br>
-            <label for="cotacao">Digite a cotação do dólar:</label>
-            <input type="number" id="cotacao">
-            <br>
-            <button onclick="baseCalculo()">Base de Cálculo</button>
-            <button type="button" onclick="imposto()">Calcular Imposto</button>
-            <p>Sua base de cálculo é: <strong id="baseCalculo"></strong></p>
-            <p>O valor total da sua compra é: <strong id="valorTotal"></strong></p>
-        </section> *//-->
-
-        <section id="historico">
-            <h3>Histórico</h3>
-            <ul id="lista-historico"></ul>
-            <button type="button" onclick="limparHistorico()">Limpar histórico</button>
-        </section>
-
-         <script src="js/funcoes.js"></script>
-
-           
-        </main>
-    
+    <script src="../app/main.js"></script>
 </body>
 </html>
+
+ 
