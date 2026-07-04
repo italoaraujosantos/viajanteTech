@@ -110,7 +110,7 @@ async function getForecast(location, days) {
 async function historySave(origin, destination, initialDate, finalDate, differenceDays, weather, forecast) {
   const dataObj = {
     Origem: origin,
-    Cidade: destination.name,
+    Cidade: destination,
     DataIda: initialDate,
     DataVolta: finalDate,
     Dias: differenceDays,
@@ -224,7 +224,7 @@ async function main() {
 }
 
 // Executa a função principal
-document.getElementById("btn-iniciar").addEventListener("click", async () => {
+document.getElementById("btn-iniciar").addEventListener("click", () => {
     initial();
 });
 
