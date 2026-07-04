@@ -226,7 +226,6 @@ async function main() {
 // Executa a função principal
 document.getElementById("btn-iniciar").addEventListener("click", async () => {
     initial();
-    await main();
 });
 
 document.getElementById("btnSalvar").addEventListener("click", async () => {
