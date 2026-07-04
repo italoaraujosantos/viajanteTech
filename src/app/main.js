@@ -159,30 +159,6 @@ function printHistory(datasList) {
         historyContainer.appendChild(dataDiv);
     });
 }
-
-/**
- * Função de iniciar 
- */
-function initial() {
-    const btnIniciar = document.getElementById("btn-iniciar");
-
-    if (btnIniciar) {
-        btnIniciar.addEventListener("click", () => {
-            const audio = new Audio("../midia/win31.mp3");
-
-            audio.play()
-                .catch((erro) => {
-                    console.error("Erro ao reproduzir o áudio:", erro);
-                    // Redireciona mesmo se o áudio falhar
-                    window.location.href = "../pages/page2.html";
-                });
-
-            audio.addEventListener("ended", () => {
-                window.location.href = "../pages/page2.html";
-            });
-        });
-    }
-}
    
 /** * Função principal que obtém os dados de viagem e clima, e salva no histórico
  * @returns {Promise<void>}
@@ -223,12 +199,27 @@ async function main() {
     }
 }
 
-// Executa a função principal
-document.getElementById("btn-iniciar").addEventListener("click", () => {
-    initial();
+// Adiciona o evento de clique ao botão "Iniciar" para tocar o áudio e redirecionar para a página 2
+document.addEventListener("DOMContentLoaded", () => {
+    const btnIniciar = document.getElementById("btn-iniciar");
+
+    btnIniciar.addEventListener("click", () => {
+        const audio = new Audio("../midia/win31.mp3");
+
+        audio.play().catch((erro) => {
+            console.error("Erro ao reproduzir o áudio:", erro);
+            window.location.href = "../pages/page2.html";
+        });
+
+        audio.addEventListener("ended", () => {
+            window.location.href = "../pages/page2.html";
+        });
+    });
 });
 
-document.getElementById("btnSalvar").addEventListener("click", async () => {
+// Adiciona o evento de clique ao botão "Salvar viagem" para chamar a função main e salvar os dados no localStorage
+const btnSalvarViagem = document.getElementById("btn-salvar");
+btnSalvarViagem.addEventListener("click", async () => {
     await main();
     const datasList = await historySave(
         origin,
