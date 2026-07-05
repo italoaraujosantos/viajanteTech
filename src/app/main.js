@@ -107,14 +107,15 @@ async function getForecast(location, days) {
  * @param {Object} weather - Objeto com informações do clima atual
  * @returns {Array} Lista atualizada de viagens salvas no localStorage      
 */
-async function historySave(origin, destination, initialDate, finalDate, differenceDays, weather, forecast) {
+async function historySave(origin, destination, initialDate, finalDate, differenceDays, current, forecast) {
   const dataObj = {
     Origem: origin,
-    Cidade: destination,
+    Destino: destination,
     DataIda: initialDate,
     DataVolta: finalDate,
     Dias: differenceDays,
     Clima: {
+        Cidade: current.location.name,
         Condicao: forecast.condition.text,
         Temp: forecast.avgtemp_c,
         TempMin: forecast.mintemp_c,
@@ -180,12 +181,13 @@ async function main() {
         const current = await getCurrentWeather(destination);
         
         const {location, current: weather } = current;
+        location.name = destination; // Adiciona o nome da cidade ao objeto location
         
         // Obtém a previsão do tempo para os próximos dias
-        const forecast = await getForecast(destination, Math.min(1, differenceDays));
+        const forecast = await getForecast(location, Math.min(1, differenceDays));
         
         // Salva os dados no localStorage
-        let datasList = await historySave(origin, current.location, initialDate, finalDate, differenceDays, weather, forecast) || [];
+        let datasList = await historySave(origin, destination, initialDate, finalDate, differenceDays, current, forecast) || [];
 
         printHistory(datasList);
 
