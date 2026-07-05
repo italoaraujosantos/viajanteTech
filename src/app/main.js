@@ -115,13 +115,13 @@ async function historySave(origin, destination, initialDate, finalDate, differen
     DataVolta: finalDate,
     Dias: differenceDays,
     Clima: {
-        Condicao: forecast.day.condition.text,
-        Temp: forecast.day.avgtemp_c,
-        TempMin: forecast.day.mintemp_c,
-        TempMax: forecast.day.maxtemp_c,
-        Chuva: forecast.day.daily_chance_of_rain,
-        Vento: forecast.day.maxwind_kph,
-        UV: forecast.day.uv
+        Condicao: forecast.condition.text,
+        Temp: forecast.avgtemp_c,
+        TempMin: forecast.mintemp_c,
+        TempMax: forecast.maxtemp_c,
+        Chuva: forecast.daily_chance_of_rain,
+        Vento: forecast.maxwind_kph,
+        UV: forecast.uv
     }
   };
   let datasList = JSON.parse(localStorage.getItem('datasList')) || [];
@@ -200,22 +200,26 @@ async function main() {
 }
 
 // Adiciona o evento de clique ao botão "Iniciar" para tocar o áudio e redirecionar para a página 2
-document.addEventListener("click", () => {
-    const btnIniciar = document.getElementById("btn-iniciar");
 
-    btnIniciar.addEventListener("click", () => {
-        const audio = new Audio("../midia/win31.mp3");
+  
+     document.addEventListener("DOMContentLoaded", () => {
+           const btnIniciar = document.getElementById("btn-iniciar");
+        if (btnIniciar) {
+            btnIniciar.addEventListener("click", () => {
+                const audio = new Audio("../midia/win31.mp3");
+    
+                audio.play().catch((erro) => {
+                    console.error("Erro ao reproduzir o áudio:", erro);
+                    window.location.href = "../pages/page2.html";
+                });
+    
+                audio.addEventListener("ended", () => {
+                    window.location.href = "../pages/page2.html";
+                });
+            });
+        }
+    }); 
 
-        audio.play().catch((erro) => {
-            console.error("Erro ao reproduzir o áudio:", erro);
-            window.location.href = "../pages/page2.html";
-        });
-
-        audio.addEventListener("ended", () => {
-            window.location.href = "../pages/page2.html";
-        });
-    });
-});
 
 // Adiciona o evento de clique ao botão "Salvar viagem" para chamar a função main e salvar os dados no localStorage
 document.addEventListener("DOMContentLoaded", () => {
