@@ -130,6 +130,37 @@ async function historySave(origin, destination, initialDate, finalDate, differen
   return datasList; 
 }
 
+/**
+ *  Imprime o histórico de viagens salvas no localStorage na tela
+ * @param {*} datasList 
+ */
+function printHistory(datasList) {
+    const historyContainer = document.getElementById('history');
+    historyContainer.innerHTML = ''; // Limpa o conteúdo anterior
+
+    datasList.forEach((data, index) => {
+        const dataDiv = document.createElement('div');
+        dataDiv.classList.add('history-item');
+        dataDiv.innerHTML = `
+            <h3>Viagem ${index + 1}</h3>
+            <p><strong>Origem:</strong> ${data.Origem}</p>
+            <p><strong>Cidade:</strong> ${data.Cidade}</p>
+            <p><strong>Data de Ida:</strong> ${data.DataIda}</p>
+            <p><strong>Data de Volta:</strong> ${data.DataVolta}</p>
+            <p><strong>Dias:</strong> ${data.Dias.Dias}</p>
+            <p><strong>Condição:</strong> ${data.Dias.Condicao}</p>
+            <p><strong>Temperatura:</strong> ${data.Dias.Temp} °C</p>
+            <p><strong>Temperatura Mínima:</strong> ${data.Dias.TempMin} °C</p>
+            <p><strong>Temperatura Máxima:</strong> ${data.Dias.TempMax} °C</p>
+            <p><strong>Chance de Chuva:</strong> ${data.Dias.Chuva} %</p>
+            <p><strong>Vento:</strong> ${data.Dias.Vento} km/h</p>
+            <p><strong>Índice UV:</strong> ${data.Dias.UV}</p>
+        `;
+        historyContainer.appendChild(dataDiv);
+    });
+}
+
+
 /** * Função principal que obtém os dados de viagem e clima, e salva no histórico
  * @returns {Promise<void>}
  */
