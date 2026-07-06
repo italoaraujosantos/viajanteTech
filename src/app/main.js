@@ -117,13 +117,13 @@ async function historySave(origin, destination, initialDate, finalDate, differen
     Dias: differenceDays,
     Clima: {
         Cidade: Location.name,
-        Condicao: forecast.forecast.forecastday[day].condition.text,
-        Temp: forecast.forecast.forecastday[day].avgtemp_c,
-        TempMin: forecast.forecast.forecastday[day].mintemp_c,
-        TempMax: forecast.forecast.forecastday[day].maxtemp_c,
-        Chuva: forecast.forecast.forecastday[day].daily_chance_of_rain,
-        Vento: forecast.forecast.forecastday[day].maxwind_kph,
-        IndiceUV: forecast.forecast.forecastday[day].uv
+        Condicao: forecast.day.condition.text,
+        Temp: forecast.day.avgtemp_c,
+        TempMin: forecast.day.mintemp_c,
+        TempMax: forecast.day.maxtemp_c,
+        Chuva: forecast.day.daily_chance_of_rain,
+        Vento: forecast.day.maxwind_kph,
+        IndiceUV: forecast.day.uv
     }
   };
   let datasList = JSON.parse(localStorage.getItem('datasList')) || [];
@@ -180,12 +180,12 @@ async function main() {
         await validateFields(origin, destination, initialDate, finalDate, differenceDays);
 
         // Obtém as condições meteorológicas atuais do local
-        const current = await getCurrentWeather(destination);
+        let current = await getCurrentWeather(destination);
         
         const {location, current: weather } = current;
                 
         // Obtém a previsão do tempo para os próximos dias
-        const forecast = await getForecast(location.name, Math.min(14, Math.max(1, differenceDays)));
+        let forecast = await getForecast(destination, Math.min(14, Math.max(1, differenceDays)));
         
         // Salva os dados no localStorage
         let datasList = await historySave(origin, destination, initialDate, finalDate, differenceDays, current, forecast) || [];
