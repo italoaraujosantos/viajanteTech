@@ -140,25 +140,26 @@ async function historySave(origin, initialDate, finalDate, totalDays, current, f
  * @param {*} datasList 
  */
 function printHistory(datasList) {
-    const historyContainer = document.getElementById('historico');
-    historyContainer.innerHTML = ''; // Limpa o conteúdo anterior
+    const historyContainer = document.getElementById('resumo');
+    historyContainer.innerHTML = ' '; // Limpa o conteúdo anterior
 
     datasList.forEach((data, index) => {
 
         const dataDiv = document.createElement('div');
         dataDiv.classList.add('historico-item');
-        dataDiv.innerHTML = `
+        dataDiv.innerHTML = ` 
             <h3>Viagem ${index + 1}</h3>
             <p><strong>Origem:</strong> ${data.Origem}</p>     
             <p><strong>Destino:</strong> ${data.Destino}</p>
             <p><strong>Data de Ida:</strong> ${data.DataIda}</p>
             <p><strong>Data de Volta:</strong> ${data.DataVolta}</p>
-            <p><strong>Condição:</strong> ${data.Condicao}</p>
-            <p><strong>Temperatura Média:</strong> ${data.TempMedia} °C</p>
-            <p><strong>Temperatura Mínima:</strong> ${data.TempMin} °C</p>
-            <p><strong>Temperatura Máxima:</strong> ${data.TempMax} °C</p>
-            <p><strong>Chance de Chuva:</strong> ${data.Chuva} %</p>
-            <p><strong>Vento:</strong> ${data.Vento} km/h</p>
+            <p><strong>Previsão para ${data.Previsoes[0].Data}:</strong></p>
+            <p><strong>Condição:</strong> ${data.Previsoes[0].Condicao}</p>
+            <p><strong>Temperatura Média:</strong> ${data.Previsoes[0].TempMedia} °C</p>
+            <p><strong>Temperatura Mínima:</strong> ${data.Previsoes[0].TempMin} °C</p>
+            <p><strong>Temperatura Máxima:</strong> ${data.Previsoes[0].TempMax} °C</p>
+            <p><strong>Chance de Chuva:</strong> ${data.Previsoes[0].Chuva} %</p>
+            <p><strong>Vento:</strong> ${data.Previsoes[0].Vento} km/h</p>
             <p><strong>Índice UV:</strong> ${data.UV}</p>
         `;
         historyContainer.appendChild(dataDiv);
@@ -183,15 +184,15 @@ async function main() {
         await validateFields(origin, destination, initialDate, finalDate, differenceDays);
 
         // Obtém as condições meteorológicas atuais do local
-        let current = await getCurrentWeather(destination);
+        const current = await getCurrentWeather(destination);
         
         const {location, current: weather } = current;
                 
         // Obtém a previsão do tempo para os próximos dias
-        let forecast = await getForecast(destination, totalDays);
+        const forecast = await getForecast(destination, totalDays);
         
         // Salva os dados no localStorage
-        let datasList = await historySave(origin, initialDate, finalDate, totalDays, current, forecast) || [];
+        const datasList = await historySave(origin, initialDate, finalDate, totalDays, current, forecast) || [];
 
         // Imprime o histórico de viagens salvas na tela
         printHistory(JSON.parse(localStorage.getItem("datasList")) || []);
@@ -227,15 +228,17 @@ async function main() {
 
   const btnResumo = document.getElementById("btn-resumo");
   if (btnResumo) {
-    btnResumo.addEventListener("click", () => {  
+    btnResumo.addEventListener("click", () => {    
       window.location.href = "../pages/resumo.html";
-      printHistory(JSON.parse(localStorage.getItem("datasList")) || []);
+    }),
+    document.addEventListener("DOMContentLoaded", () => {
+        printHistory(JSON.parse(localStorage.getItem("datasList")) || []);
     });
   }
 
   const btnVoltar = document.getElementById("btn-voltar");
   if (btnVoltar) {
     btnVoltar.addEventListener("click", () => {
-      window.location.href = "../pages/index.html";
+        window.location.href = "../pages/index.html";
     });
   }
