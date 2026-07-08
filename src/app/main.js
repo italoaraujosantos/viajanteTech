@@ -196,7 +196,7 @@ async function main() {
     }
 }
 
-function initEvents(main) {
+
   const btnIniciar = document.getElementById("btn-iniciar");
   if (btnIniciar) {
     btnIniciar.addEventListener("click", () => {
@@ -219,4 +219,17 @@ function initEvents(main) {
       await main().historySave();
     });
   }
-}
+
+  const btnResumo = document.getElementById("btn-resumo");
+  if (btnResumo) {
+    btnResumo.addEventListener("click", () => {
+      window.location.href = "../pages/resumo.html";
+    });
+  }
+
+  const btnVoltar = document.getElementById("btn-voltar");
+  if (btnVoltar) {
+    btnVoltar.addEventListener("click", () => {
+      window.location.href = "../pages/index.html";
+    });
+  }
