@@ -110,22 +110,24 @@ async function getForecast(location, days) {
  * @param {Object} weather - Objeto com informações do clima atual
  * @returns {Array} Lista atualizada de viagens salvas no localStorage      
 */
-async function historySave(origin, initialDate, finalDate, current, forecast) {
+async function historySave(origin, initialDate, finalDate, totalDays, current, forecast) {
     const day = forecast.forecast.forecastday[0].day;
+    const previsions = forecast.forecast.forecastday.map(item => ({
+        Data: item.date,
+        Condicao: item.day.condition.text,
+        TempMedia: item.day.avgtemp_c,
+        TempMin: item.day.mintemp_c,
+        TempMax: item.day.maxtemp_c,
+        Chuva: item.day.daily_chance_of_rain,
+        Vento: item.day.maxwind_kph,
+        UV: item.day.uv
+    }));
     const dataObj = {
     Origem: origin,
     Destino: current.location.name,
     DataIda: initialDate,
     DataVolta: finalDate,
-    Clima: {
-        Condicao: day.condition.text,
-        Temp: day.avgtemp_c,
-        TempMin: day.mintemp_c,
-        TempMax: day.maxtemp_c,
-        Chuva: day.daily_chance_of_rain,
-        VentoKph: day.maxwind_kph,
-        IndiceUV: day.uv
-    }
+    Previsoes: previsions
   };
   let datasList = JSON.parse(localStorage.getItem('datasList')) || [];
   datasList.push(dataObj);
@@ -176,7 +178,7 @@ async function main() {
         const start = new Date(initialDate);
         const end = new Date(finalDate);
         const differenceDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-        
+        const totalDays = Math.min(14, Math.max(1, differenceDays));
         // Valida os campos de entrada
         await validateFields(origin, destination, initialDate, finalDate, differenceDays);
 
@@ -186,10 +188,10 @@ async function main() {
         const {location, current: weather } = current;
                 
         // Obtém a previsão do tempo para os próximos dias
-        let forecast = await getForecast(destination, Math.min(14, Math.max(1, differenceDays)));
+        let forecast = await getForecast(destination, totalDays);
         
         // Salva os dados no localStorage
-        let datasList = await historySave(origin, initialDate, finalDate, current, forecast) || [];
+        let datasList = await historySave(origin, initialDate, finalDate, totalDays, current, forecast) || [];
 
         // Imprime o histórico de viagens salvas na tela
         printHistory(JSON.parse(localStorage.getItem("datasList")) || []);
