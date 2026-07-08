@@ -222,7 +222,8 @@ async function main() {
   const btnSalvarViagem = document.getElementById("btn-salvar");
   if (btnSalvarViagem) {
     btnSalvarViagem.addEventListener("click", async () => {
-      await main().historySave();
+      await main(); 
+      historySave();
     });
   }
 
