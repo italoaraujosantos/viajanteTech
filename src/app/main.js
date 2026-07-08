@@ -191,11 +191,6 @@ async function main() {
         // Salva os dados no localStorage
         let datasList = await historySave(origin, initialDate, finalDate, current, forecast) || [];
 
-        // Se fechar a aba do navegador, o localStorage é limpo
-        window.addEventListener('beforeunload', () => {
-            localStorage.removeItem('datasList');
-        });
-
     } catch (error) {
         alert(`Erro: ${error.message}`);
     }
