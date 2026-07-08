@@ -123,7 +123,7 @@ async function historySave(origin, initialDate, finalDate, current, forecast) {
         TempMin: day.mintemp_c,
         TempMax: day.maxtemp_c,
         Chuva: day.daily_chance_of_rain,
-        Vento: day.maxwind_kph,
+        VentoKph: day.maxwind_kph,
         IndiceUV: day.uv
     }
   };
@@ -201,34 +201,27 @@ async function main() {
     }
 }
 
-// Adiciona o evento de clique ao botão "Iniciar" para tocar o áudio e redirecionar para a página 2
+function initEvents(main) {
+  const btnIniciar = document.getElementById("btn-iniciar");
+  if (btnIniciar) {
+    btnIniciar.addEventListener("click", () => {
+      const audio = new Audio("../midia/win31.mp3");
 
-  
-     document.addEventListener("DOMContentLoaded", () => {
-           const btnIniciar = document.getElementById("btn-iniciar");
-        if (btnIniciar) {
-            btnIniciar.addEventListener("click", () => {
-                const audio = new Audio("../midia/win31.mp3");
-    
-                audio.play().catch((erro) => {
-                    console.error("Erro ao reproduzir o áudio:", erro);
-                    window.location.href = "../pages/page2.html";
-                });
-    
-                audio.addEventListener("ended", () => {
-                    window.location.href = "../pages/page2.html";
-                });
-            });
-        }
-    }); 
+      audio.play().catch((erro) => {
+        console.error("Erro ao reproduzir o áudio:", erro);
+        window.location.href = "../pages/page2.html";
+      });
 
+      audio.addEventListener("ended", () => {
+        window.location.href = "../pages/page2.html";
+      });
+    });
+  }
 
-// Adiciona o evento de clique ao botão "Salvar viagem" para chamar a função main e salvar os dados no localStorage
-document.addEventListener("DOMContentLoaded", () => {
-    const btnSalvarViagem = document.getElementById("btn-salvar");
-    if (btnSalvarViagem) {
-        btnSalvarViagem.addEventListener("click", async () => {
-            await main();
-        });
-    }
-});
+  const btnSalvarViagem = document.getElementById("btn-salvar");
+  if (btnSalvarViagem) {
+    btnSalvarViagem.addEventListener("click", async () => {
+      await main().historySave();
+    });
+  }
+}
