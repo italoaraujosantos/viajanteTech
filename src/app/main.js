@@ -3,6 +3,9 @@
  * Docs: https://www.weatherapi.com/docs/
  * Sign up free: https://www.weatherapi.com/signup.aspx
  * https://github.com/weatherapicom/weatherapi-examples/blob/main/javascript/current.js
+ *  * http://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=bulk
+ * 
+ * https://api.weatherapi.com/v1/forecast.json?key=a47b53784e9541c8a0101129260107&q=Londres&days=5
 */
 const API_KEY = "a47b53784e9541c8a0101129260107"; 
 const BASE_URL ="https://api.weatherapi.com/v1"; 
@@ -107,23 +110,21 @@ async function getForecast(location, days) {
  * @param {Object} weather - Objeto com informações do clima atual
  * @returns {Array} Lista atualizada de viagens salvas no localStorage      
 */
-async function historySave(origin, destination, initialDate, finalDate, differenceDays, current, forecast) {
+async function historySave(origin, initialDate, finalDate, current, forecast) {
     const day = forecast.forecast.forecastday[0].day;
     const dataObj = {
     Origem: origin,
-    Destino: destination,
+    Destino: Location.name,
     DataIda: initialDate,
     DataVolta: finalDate,
-    Dias: differenceDays,
     Clima: {
-        Cidade: Location.name,
-        Condicao: forecast.day.condition.text,
-        Temp: forecast.day.avgtemp_c,
-        TempMin: forecast.day.mintemp_c,
-        TempMax: forecast.day.maxtemp_c,
-        Chuva: forecast.day.daily_chance_of_rain,
-        Vento: forecast.day.maxwind_kph,
-        IndiceUV: forecast.day.uv
+        Condicao: day.condition.text,
+        Temp: day.avgtemp_c,
+        TempMin: day.mintemp_c,
+        TempMax: day.maxtemp_c,
+        Chuva: day.daily_chance_of_rain,
+        Vento: day.maxwind_kph,
+        IndiceUV: day.uv
     }
   };
   let datasList = JSON.parse(localStorage.getItem('datasList')) || [];
@@ -188,7 +189,7 @@ async function main() {
         let forecast = await getForecast(destination, Math.min(14, Math.max(1, differenceDays)));
         
         // Salva os dados no localStorage
-        let datasList = await historySave(origin, destination, initialDate, finalDate, differenceDays, current, forecast) || [];
+        let datasList = await historySave(origin, initialDate, finalDate, current, forecast) || [];
 
         // Se fechar a aba do navegador, o localStorage é limpo
         window.addEventListener('beforeunload', () => {
