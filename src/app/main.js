@@ -114,7 +114,7 @@ async function historySave(origin, initialDate, finalDate, current, forecast) {
     const day = forecast.forecast.forecastday[0].day;
     const dataObj = {
     Origem: origin,
-    Destino: Location.name,
+    Destino: current.location.name,
     DataIda: initialDate,
     DataVolta: finalDate,
     Clima: {
@@ -138,26 +138,26 @@ async function historySave(origin, initialDate, finalDate, current, forecast) {
  * @param {*} datasList 
  */
 function printHistory(datasList) {
-    const historyContainer = document.getElementById('history');
+    const historyContainer = document.getElementById('historico');
     historyContainer.innerHTML = ''; // Limpa o conteúdo anterior
 
     datasList.forEach((data, index) => {
+
         const dataDiv = document.createElement('div');
-        dataDiv.classList.add('history-item');
+        dataDiv.classList.add('historico-item');
         dataDiv.innerHTML = `
             <h3>Viagem ${index + 1}</h3>
-            <p><strong>Origem:</strong> ${data.Origem}</p>
-            <p><strong>Cidade:</strong> ${data.Cidade}</p>
+            <p><strong>Origem:</strong> ${data.Origem}</p>     
+            <p><strong>Destino:</strong> ${data.Destino}</p>
             <p><strong>Data de Ida:</strong> ${data.DataIda}</p>
             <p><strong>Data de Volta:</strong> ${data.DataVolta}</p>
-            <p><strong>Dias:</strong> ${data.Dias.Dias}</p>
-            <p><strong>Condição:</strong> ${data.Dias.Condicao}</p>
-            <p><strong>Temperatura:</strong> ${data.Dias.Temp} °C</p>
-            <p><strong>Temperatura Mínima:</strong> ${data.Dias.TempMin} °C</p>
-            <p><strong>Temperatura Máxima:</strong> ${data.Dias.TempMax} °C</p>
-            <p><strong>Chance de Chuva:</strong> ${data.Dias.Chuva} %</p>
-            <p><strong>Vento:</strong> ${data.Dias.Vento} km/h</p>
-            <p><strong>Índice UV:</strong> ${data.Dias.UV}</p>
+            <p><strong>Condição:</strong> ${data.Condicao}</p>
+            <p><strong>Temperatura Média:</strong> ${data.TempMedia} °C</p>
+            <p><strong>Temperatura Mínima:</strong> ${data.TempMin} °C</p>
+            <p><strong>Temperatura Máxima:</strong> ${data.TempMax} °C</p>
+            <p><strong>Chance de Chuva:</strong> ${data.Chuva} %</p>
+            <p><strong>Vento:</strong> ${data.Vento} km/h</p>
+            <p><strong>Índice UV:</strong> ${data.UV}</p>
         `;
         historyContainer.appendChild(dataDiv);
     });
@@ -191,6 +191,9 @@ async function main() {
         // Salva os dados no localStorage
         let datasList = await historySave(origin, initialDate, finalDate, current, forecast) || [];
 
+        // Imprime o histórico de viagens salvas na tela
+        printHistory(JSON.parse(localStorage.getItem("datasList")) || []);
+
     } catch (error) {
         alert(`Erro: ${error.message}`);
     }
@@ -222,8 +225,9 @@ async function main() {
 
   const btnResumo = document.getElementById("btn-resumo");
   if (btnResumo) {
-    btnResumo.addEventListener("click", () => {
+    btnResumo.addEventListener("click", () => {  
       window.location.href = "../pages/resumo.html";
+      printHistory(JSON.parse(localStorage.getItem("datasList")) || []);
     });
   }
 
