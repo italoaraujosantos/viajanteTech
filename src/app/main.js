@@ -138,31 +138,47 @@ async function historySave(origin, initialDate, finalDate, totalDays, current, f
 /**
  *  Imprime o histórico de viagens salvas no localStorage na tela
  * @param {*} datasList 
+ * @param {*} error 
  */
-function printHistory(datasList) {
-    const historyContainer = document.getElementById('resumo');
+function printHistory(datasList, error) {
+    const historyContainer = document.getElementById("historico-items");
+    if (!historyContainer) {
+        throw new Error('Elemento com id "historico-items" não encontrado.');
+    }
+
     historyContainer.innerHTML = ' '; // Limpa o conteúdo anterior
 
     datasList.forEach((data, index) => {
 
         const dataDiv = document.createElement('div');
-        dataDiv.classList.add('historico-item');
+        dataDiv.classList.add('historico-items');
+        const previsionsDiv = document.createElement('div');
+        previsionsDiv.classList.add('previsoes-items');   
+
         dataDiv.innerHTML = ` 
             <h3>Viagem ${index + 1}</h3>
             <p><strong>Origem:</strong> ${data.Origem}</p>     
             <p><strong>Destino:</strong> ${data.Destino}</p>
             <p><strong>Data de Ida:</strong> ${data.DataIda}</p>
             <p><strong>Data de Volta:</strong> ${data.DataVolta}</p>
-            <p><strong>Previsão para ${data.Previsoes[0].Data}:</strong></p>
-            <p><strong>Condição:</strong> ${data.Previsoes[0].Condicao}</p>
-            <p><strong>Temperatura Média:</strong> ${data.Previsoes[0].TempMedia} °C</p>
-            <p><strong>Temperatura Mínima:</strong> ${data.Previsoes[0].TempMin} °C</p>
-            <p><strong>Temperatura Máxima:</strong> ${data.Previsoes[0].TempMax} °C</p>
-            <p><strong>Chance de Chuva:</strong> ${data.Previsoes[0].Chuva} %</p>
-            <p><strong>Vento:</strong> ${data.Previsoes[0].Vento} km/h</p>
-            <p><strong>Índice UV:</strong> ${data.UV}</p>
-        `;
+            `;
+        const itens = data.Previsoes.map((previsao, i) => `
+            <div class="previsao-item">
+                <p><strong>Previsão para ${previsao.Data}:</strong></p>
+                <p><strong>Condição:</strong> ${previsao.Condicao}</p>
+                <p><strong>Temperatura Média:</strong> ${previsao.TempMedia} °C</p>
+                <p><strong>Temperatura Mínima:</strong> ${previsao.TempMin} °C</p>
+                <p><strong>Temperatura Máxima:</strong> ${previsao.TempMax} °C</p>
+                <p><strong>Chance de Chuva:</strong> ${previsao.Chuva} %</p>
+                <p><strong>Vento:</strong> ${previsao.Vento} km/h</p>
+                <p><strong>Índice UV:</strong> ${previsao.UV}</p>
+            </div>
+        `).join('');      
+        previsionsDiv.innerHTML = itens;
+        
         historyContainer.appendChild(dataDiv);
+        historyContainer.appendChild(previsionsDiv);    
+    
     });
 }
 
@@ -194,9 +210,6 @@ async function main() {
         // Salva os dados no localStorage
         const datasList = await historySave(origin, initialDate, finalDate, totalDays, current, forecast) || [];
 
-        // Imprime o histórico de viagens salvas na tela
-        printHistory(JSON.parse(localStorage.getItem("datasList")) || []);
-
     } catch (error) {
         alert(`Erro: ${error.message}`);
     }
@@ -227,15 +240,23 @@ async function main() {
     });
   }
 
-  const btnResumo = document.getElementById("btn-resumo");
-  if (btnResumo) {
-    btnResumo.addEventListener("click", () => {    
-      window.location.href = "../pages/resumo.html";
-    }),
-    document.addEventListener("DOMContentLoaded", () => {
-        printHistory(JSON.parse(localStorage.getItem("datasList")) || []);
-    });
-  }
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const historyContainer = document.getElementById("historico-items");
+
+    if (historyContainer) {
+        const datasList = JSON.parse(localStorage.getItem("datasList")) || [];
+        printHistory(datasList);
+    }
+
+    const btnResumo = document.getElementById("btn-resumo");
+
+    if (btnResumo) {
+        btnResumo.addEventListener("click", () => {
+            window.location.href = "../pages/resumo.html";
+        });
+    }
+});
 
   const btnVoltar = document.getElementById("btn-voltar");
   if (btnVoltar) {
